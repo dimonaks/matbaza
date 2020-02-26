@@ -1,0 +1,9 @@
+*.pyc
+*.gdbm3
+*~
+.DS_Store
+csvhtml/data/database_mol.csv
+csvhtml/data/database1.csv
+dist/
+original_and_google/
+matbaza.egg-info/
