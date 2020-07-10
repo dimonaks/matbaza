@@ -117,3 +117,15 @@ tfoot input {
   margin-right: 8px;
   opacity: 0.7;
 }
+
+
+
+.outer {background-color:lightgray;}
+.outer > * {
+  display:inline-block;
+  vertical-align:middle;
+  background-color:lightgreen;
+}
+.one {width:80px; height:80px;}
+.two {width:80px; height:80px;}
+.three {width:80px; height:100px;}

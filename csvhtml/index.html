@@ -5,28 +5,50 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>CSV to HTML Table</title>
-    <meta name="author" content="Derek Eder">
+    <title>Matbaza, CEST</title>
+    <meta name="author" content="Dmitry Aksenov">
     <meta content="Display any CSV file as a searchable, filterable, pretty HTML table" />
+
+<!-- 
+    <meta http-equiv='cache-control' content='no-cache'>
+    <meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+ -->
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/dataTables.bootstrap.css" rel="stylesheet">
     <link href="css/select.bootstrap4.css" rel="stylesheet">
 
-    <script type="text/javascript" src="js/JSmol.min.js"></script>
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script type="text/javascript" src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script type="text/javascript" src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <script type="text/javascript" src="jsmol/JSmol.min.js"></script>
 
 
-<!--   tfoot input {
-    width: 100%;
-    padding: 3px;
-    box-sizing: border-box;
-  } -->
+<!--     <script type="text/javascript" src="jsmol/JSmoljQuery.js"></script>
+    <script type="text/javascript" src="jsmol/JSmolCore.js"></script>
+    <script type="text/javascript" src="jsmol/JSmolApplet.js"></script>
+    <script type="text/javascript" src="jsmol/JSmolApi.js"></script>
+    <script type="text/javascript" src="jsmol/j2s/j2sjmol.js"></script>
+    <script type="text/javascript" src="jsmol/JSmol.js"></script>
+
+    <script type="text/javascript" src="jsmol/JSmolThree.js"></script>
+    <script type="text/javascript" src="jsmol/JSmolGLmol.js"></script>
+ -->
+
+
+<!--     <script type="text/javascript">
+    var Info = {
+      width: 300,
+      height: 300,
+     serverURL: "http://chemapps.stolaf.edu/jmol/jsmol/jsmol.php ",
+      // serverURL: "http://propka.ki.ku.dk/~jhjensen/jsmol/jsmol.php ",
+      use: "HTML5",
+      j2sPath: "jsmol/j2s",
+      console: "jmolApplet0_infodiv"
+    }
+    </script>
+ -->
+
+
 
 
   </head>
@@ -38,11 +60,11 @@
 
     <div class="container-fluid">
 
-      <h2>CEE Computational Materials Database v0.0.1</h2>
+      <!-- <h2>CEE Computational Materials Database</h2> -->
 
 <!--       <p>Display any CSV file as a searchable, filterable, pretty HTML table. Done in 100% JavaScript. <a href='https://github.com/derekeder/csv-to-html-table'>Code on GitHub</a>.</p> -->
 
-      <p>List of calculations:</p>
+      <p>CEST Computational Materials Database - MatBaza:</p>
       
     <div id='events'></div>
       
@@ -53,14 +75,7 @@
 
     </div><!-- /.container -->
 
-    <footer class='footer'>
-      <div class='container-fluid'>
-        <hr />
-     <!--    <p class='pull-right'><a href='https://github.com/derekeder/csv-to-html-table'>CSV to HTML Table</a> by <a href='http://derekeder.com'>Derek Eder</a></p>
-      -->
-      <p>Credit: <a href="http://faculty.skoltech.ru/people/dmitryaksenov">Dmitry Aksyonov</a></p>
-      </div>
-    </footer>
+
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -74,23 +89,12 @@
     <script type="text/javascript" src="js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="js/dataTables.bootstrap.js"></script>
     <script type="text/javascript" src="js/dataTables.select.js"></script>
-    
-
-
     <script type="text/javascript" src="js/csv_to_html_table.js"></script>
-    
     <script type="text/javascript" src="js/aksenov.js"></script>
 
 
 
-
-
     <script type="text/javascript">
-  
-
-
-
-
       function format_link(link){
         if (link)
           return "<a href='" + link + "' target='_blank'>" + link + "</a>";
@@ -98,9 +102,11 @@
           return "";
       }
 
+
+
       CsvToHtmlTable.init({
         // csv_path: 'data/Health Clinics in Chicago.csv',
-        csv_path: 'data/database1.csv',
+        csv_path: '/Data/'+qs('db')+'/database1.csv',
         element: 'example23', 
         allow_download: false,
         csv_options: {separator: ','},
@@ -109,24 +115,135 @@
         // custom_formatting: [[3, format_link]]
       });
 
+
+      // alert(window.location.href);
+      // alert(qs('db'));
+
     </script>
 
 
 
-<button onclick="document.getElementById('potential').innerHTML=runPyScript( return_cl_var()    )">Potential</button>
+  <script type="text/javascript">
+  var Info = {
+    width: 500,
+    height: 400,
+    j2sPath: "jsmol/j2s",
+  }
+  </script>
+<style type="text/css" media="screen">
+.outer {background-color:lightgray;}
+.outer > * {
+  display:inline-block;
+  vertical-align:middle;
+  background-color:lightblue;
+}
+.one {width:500px; height:400px;} 
+.two {width:1000px; height:400px;}
+.three {width:80px; height:400px;}
+</style>
 
 
 
-<button onclick="document.getElementById('view').innerHTML=runJmol( return_cl_var()  )">view</button>
+<div class="outer">
+  <div class="one">
+  <script type="text/javascript">
+    jmolApplet0 = Jmol.getApplet("jmolApplet0", Info);
+    Jmol.script(jmolApplet0,"background white; load test.xyz; spin off")
+  </script>
+  </div>
 
-<p id="potential"></p>
-<p id="view"></p>
+  <div class="two">
+
+  <!-- <button onclick="document.getElementById('potential').innerHTML=runPyScript( return_cl_var()    )">Potential</button>
+   -->
+  <button onclick="document.getElementById('view').innerHTML=loadJmol( return_cl_var()+' /home/Data/'+qs('db')  );
+  localStorage.clear();
+  Jmol.script(jmolApplet0, 'load ../xyz/current.xyz; ');
+  ">Choose structure and press here to show it in JSmol</button>
+
+  <p id="potential"></p>
+  <p id="view"></p>
+
+  </div>
+<!-- <div class="three">world</div> -->
+</div>
+
+
+
+  <br clear="all" / >
+    <b>Model:</b>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'spacefill 20%;wireframe 0.15; ');">Ball and sticks</input>  
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'wireframe only; ');" checked="checked">Wireframe</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'cartoon only; ');">Cartoon</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'backbone only; ');">Backbone</input>
+
+
+    <b>&nbsp; &nbsp; &nbsp; &nbsp; Spin:</b>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'spin off; ');" checked="checked">Off</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'spin on; ');">On</input></br>
+  
+  <br clear="all" / >
+    
+    <b>Color:</b>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'color cpk; ');" checked="checked">Atom</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'color structure; ');">Secondary</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'color chain; ');">Chain</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'color amino; ');">Residue</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'color group; ');">Group</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'color monomer; ');">Monomer</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'color relativeTemperature; ');">Relative temp.</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'color fixedTemperature; ');">Fixed temp.</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'color black; ');">Black</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'color white; ');">White</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'color grey; ');">Grey</input>
+    </br>
+  <br clear="all" / >
+    <b>Background:</b>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'background black; ');" checked="checked">Black</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'background white; ');">White</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'background red; ');">Red</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'background green; ');">Green</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'background blue; ');">Blue</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'background yellow; ');">Yellow</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'background cyan; ');">Cyan</input>
+    <input name="vis" type="radio" onclick="javascript:Jmol.script(jmolApplet0,
+       'background magenta; ');">Magenta</input></br>
 
 
 
 
-
-
+    <footer class='footer'>
+      <div class='container-fluid'>
+        <hr />
+     <!--    <p class='pull-right'><a href='https://github.com/derekeder/csv-to-html-table'>CSV to HTML Table</a> by <a href='http://derekeder.com'>Derek Eder</a></p>
+      -->
+      <p>Credit: <a href="http://faculty.skoltech.ru/people/dmitryaksenov">Dmitry Aksyonov</a></p>
+      </div>
+    </footer>
 
   </body>
 </html>

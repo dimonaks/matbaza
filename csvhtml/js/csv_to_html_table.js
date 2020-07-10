@@ -3,8 +3,9 @@ var CsvToHtmlTable = CsvToHtmlTable || {};
 var cl1_file = '0';
 var cl2_file = '0';
 function return_cl_var(input){
-	    out = cl1_file.concat(' ', cl2_file)
-		    return out;
+  //aksenov
+      out = cl1_file.concat(' ', cl2_file)
+        return out;
 }
 
 
@@ -120,10 +121,13 @@ CsvToHtmlTable = {
     table
 	        .on( 'select', function ( e, dt, type, indexes ) {
 	            var rowData = table.rows( indexes ).data().toArray();
+            //Aksenov
             // events.prepend( '<div><b>'+type+' selection</b> - '+JSON.stringify( rowData )+'</div>' );
 	            cl2_file = cl1_file;
-	            cl1_file = JSON.stringify(rowData[0][7]);
-
+              // alert(rowData[0][5], rowData[0].length);
+              i_path = rowData[0].length - 2
+	            cl1_file = JSON.stringify( rowData[0][i_path] );
+              // alert(cl1_file);
 				        } );
 
 

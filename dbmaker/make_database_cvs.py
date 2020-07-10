@@ -47,28 +47,35 @@ __date__ = ""
 def read_siman_vasp(cl, row, filename):
 
 
+    try:
+        c = filename.split('_')[0]
+        # print(c) 
+        c = re.sub('\D', '', c) # replace any non-digit character with ''
+        if c:
+            c = int(c)
+            if c == 1:
+                c *= 100
+        else:
+            c = None
+        row['conc'] = c
 
-    c = filename.split('_')[0]
-    # print(c) 
-    c = re.sub('\D', '', c) # replace any non-digit character with ''
-    if c:
-        c = int(c)
-        if c == 1:
-            c *= 100
-    else:
-        c = None
-    row['conc'] = c
 
+        row['name'] = cl.name
+        row['energy'] = '{:.3f}'.format(cl.energy_sigma0)
+        row['energy_at'] = '{:.3f}'.format(cl.energy_sigma0/cl.end.natom)
+        row['status'] = 'OK'
+        row['spg'] = cl.end.get_space_group_info()[0]
+        row['nat'] = cl.end.natom
+        row['vol'] = cl.end.vol
+    except:
+        st = None
+        return None        
 
-    row['name'] = cl.name
-    row['energy'] = '{:.3f}'.format(cl.energy_sigma0)
-    row['energy_at'] = '{:.3f}'.format(cl.energy_sigma0/cl.end.natom)
-    row['status'] = 'OK'
-    row['spg'] = cl.end.get_space_group_info()[0]
-    row['nat'] = cl.end.natom
-    row['vol'] = cl.end.vol
 
     return row
+
+global chem
+chem = []
 
 def read_pymatgen_gaussian(cl, row, filename):
 
@@ -77,11 +84,18 @@ def read_pymatgen_gaussian(cl, row, filename):
         st = cl.final_structure # Molecule
 
         # print('st ', type(st), dir(st))
-        pg = PointGroupAnalyzer(st)
-        row['spg'] = pg.sch_symbol
 
         nat = st.num_sites
         row['name'] = st.formula
+
+
+        if row['name'] in chem:
+            return None
+        else:
+            chem.append(row['name'])
+
+        pg = PointGroupAnalyzer(st)
+        row['spg'] = pg.sch_symbol
         row['energy'] = '{:.3f}'.format(cl.final_energy)
         row['energy_at'] = '{:.3f}'.format(cl.final_energy/nat)
         row['status'] = 'OK'
@@ -114,8 +128,8 @@ if pickle_type == 1:
 
 elif pickle_type == 2:
 
-    columns = ['Formula', 'spg', 'energy_at', 'nat', 'path', 'status']
-    col_rename = {'name':'Name', 'spg':'Group', 'energy_at':'E, eV/at', 'nat':'Nsites', 'path':'path', 'status':'status'}
+    columns = ['name', 'spg', 'energy_at', 'nat', 'path', 'status']
+    col_rename = {'name':'Formula', 'spg':'Group', 'energy_at':'E, eV/at', 'nat':'Nsites', 'path':'path', 'status':'status'}
 
     read_func = read_pymatgen_gaussian
 
@@ -125,7 +139,7 @@ os.chdir(path2database)
 
 
 csv = []
-
+i = 0
 if 1:
 
     with open('hash_dict.json') as fp:
@@ -146,14 +160,26 @@ if 1:
             
             row = read_func(cl, row, pickle_fileP.name)
 
+
+
             if row is None:
+                ''
                 print('Broken file:', pickle_file)
                 continue
+
+            i+=1
+            # print(i, 'row', row)
+            csv.append(row)
 
         else:
             row['status'] = 'no pickle file'
 
-        csv.append(row)
+
+        if i>100:
+            break
+
+
+    # print( len(csv) )
 
     df = pd.DataFrame(csv, columns = columns)
 
