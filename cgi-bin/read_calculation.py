@@ -1,9 +1,24 @@
 #!/usr/bin/python3
 """
-read_calculation.py by Aksyonov Dmitry, Skoltech, Moscow
+NAME
+    read_calculation.py
 
+SYNOPSIS
+
+
+DESCRIPTION
+
+Gets two filenames of pickle objects from JS script.
+The files are deserialized and the average intercalation potential is calculated
+
+REQUIRE
+        numpy, siman
+
+AUTHOR
+        Aksyonov Dmitry, Skoltech, Moscow
 
 """
+
 import cgitb, cgi 
 cgitb.enable()
 print('Content-type: text/html\n\n')

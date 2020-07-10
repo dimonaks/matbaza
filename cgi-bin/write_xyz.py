@@ -1,4 +1,25 @@
 #!/usr/bin/scl enable rh-python36 -- python3
+"""
+NAME
+    write_xyz.py
+
+SYNOPSIS
+
+
+DESCRIPTION
+
+Gets name of pickle object and path to database from JS script.
+The file is deserialized and its crystal structure is written as xyz file. 
+
+REQUIRE
+        numpy, siman
+
+AUTHOR
+        Aksyonov Dmitry, Skoltech, Moscow
+
+"""
+
+
 if 1:
     import cgitb, cgi 
     cgitb.enable()

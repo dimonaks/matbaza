@@ -1,8 +1,24 @@
+/*
+NAME
+    aksenov.js
 
+SYNOPSIS
+
+
+DESCRIPTION
+
+Small functions interfacing JS and python scrips
+
+REQUIRE
+        JSmol, python scripts write_xyz.py, read_calculation.py in cgi-bin folder 
+
+AUTHOR
+        Aksyonov Dmitry, Skoltech, Moscow
+*/
 
 
 function runJmol(input){
-
+//Show web-applet of JSmol
 var Info = {
   color: "#FFFFFF",
   height: 300,
@@ -23,6 +39,7 @@ return Jmol.getApplet("myJmol", Info);
 
 
 function loadJmol(input){
+    //Run python script write_xyz.py
     var jqXHR = $.ajax({
         type: "POST",
         url: "/cgi-bin/write_xyz.py",
@@ -36,6 +53,7 @@ function loadJmol(input){
 
 
 function runPyScript(input){
+    //Run python script read_calculation.py
     var jqXHR = $.ajax({
         type: "POST",
         url: "/cgi-bin/read_calculation.py",
@@ -79,6 +97,7 @@ function qs(key) {
 
 
 function postData(input) {
+    //Some test function 
     $.ajax({
         // type: "GET",
         url: "./python_script2.py",
