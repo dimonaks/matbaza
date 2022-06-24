@@ -5,6 +5,7 @@ var cl2_file = '0';
 function return_cl_var(input){
   //aksenov
       out = cl1_file.concat(' ', cl2_file)
+      out = out.concat(cl2_file)
         return out;
 }
 

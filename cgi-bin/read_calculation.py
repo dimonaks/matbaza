@@ -24,9 +24,8 @@ cgitb.enable()
 print('Content-type: text/html\n\n')
 
 import sys
-sys.path.extend(['/home/aksenov/www/siman'])
-from classes import CalculationVasp
-from analysis import calc_redox
+from siman.classes import CalculationVasp
+from simna.analysis import calc_redox
 
 db_path = '/home/aksenov/www/CES/'
 

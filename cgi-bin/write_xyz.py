@@ -1,4 +1,6 @@
 #!/usr/bin/scl enable rh-python36 -- python3
+
+
 """
 NAME
     write_xyz.py
